@@ -29,6 +29,16 @@ function checkWin() {
     })
 }
 
+function toReset() {
+    let boxtexts= document.querySelectorAll('.boxtext');
+    Array.from(boxtexts).forEach(element => {
+        element.innerText = '';
+    });
+    turn = "X";
+    gameOver = false;
+    document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
+}
+
 let boxes = document.getElementsByClassName("box");
 let boxesArray = Array.from(boxes);
 
@@ -37,6 +47,10 @@ for (let i = 0; i< boxesArray.length; i++) {
     let boxtext = element.querySelector('.boxtext');
 
     element.addEventListener('click', function () {
+        if(gameOver){
+            toReset();
+        }
+
         if (boxtext.innerText === '') {
             boxtext.innerText = turn;
             turn = changeTurn();
@@ -49,13 +63,4 @@ for (let i = 0; i< boxesArray.length; i++) {
     });
 }
 
-reset.addEventListener("click", function () {
-    let boxtexts= document.querySelectorAll('.boxtext');
-    Array.from(boxtexts).forEach(element => {
-        element.innerText = '';
-    });
-    turn = "X";
-    gameOver = false;
-    document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
-
-});
+reset.addEventListener("click", toReset);
